@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AppScheduler</string>
+    <string name="add_schedule">Add new schedule</string>
+</resources>

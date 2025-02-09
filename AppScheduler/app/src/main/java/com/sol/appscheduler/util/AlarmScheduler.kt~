@@ -1,0 +1,52 @@
+package com.sol.appscheduler.util
+
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import androidx.annotation.RequiresApi
+import androidx.core.content.getSystemService
+import com.sol.appscheduler.receiver.AlarmReceiver
+import com.sol.appscheduler.data.Schedule
+
+object AlarmScheduler {
+    @RequiresApi(23)
+    fun schedule(context: Context, schedule: Schedule) {
+        val alarmManager = context.getSystemService<AlarmManager>() ?: return
+        
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            putExtra("package_name", schedule.packageName)
+            putExtra("schedule_id", schedule.id)
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            schedule.id,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            schedule.triggerTime,
+            pendingIntent
+        )
+    }
+
+    fun cancel(context: Context, schedule: Schedule) {
+        val alarmManager = context.getSystemService<AlarmManager>() ?: return
+        val intent = Intent(context, AlarmReceiver::class.java)
+        
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            schedule.id,
+            intent,
+            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        pendingIntent?.let {
+            alarmManager.cancel(it)
+            it.cancel()
+        }
+    }
+} 
