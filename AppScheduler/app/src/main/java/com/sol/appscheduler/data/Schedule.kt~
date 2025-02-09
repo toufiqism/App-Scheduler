@@ -48,9 +48,4 @@ interface ScheduleDao {
     // Observable Flow of all schedules sorted by time
     @Query("SELECT * FROM schedules ORDER BY triggerTime ASC")
     fun getAll(): Flow<List<Schedule>>
-
-
-    @Query("SELECT * FROM schedules ORDER BY triggerTime ASC")
-    suspend fun getAllSync(): List<Schedule>
-
 } 

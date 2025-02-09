@@ -42,7 +42,7 @@ class ScheduleAdapter(
             holder.appName.text = "Unknown App"
         }
         
-        holder.time.text = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault())
+        holder.time.text = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
             .format(Date(schedule.triggerTime))
             
         holder.status.text = if (schedule.isCompleted) "Completed" else "Pending"
