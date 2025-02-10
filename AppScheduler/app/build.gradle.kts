@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.sol.appscheduler"
+    namespace = "com.takbar.appscheduler"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.sol.appscheduler"
+        applicationId = "com.takbar.appscheduler"
         minSdk = 29
         targetSdk = 35
         versionCode = 1
